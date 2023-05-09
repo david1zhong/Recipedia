@@ -1,0 +1,69 @@
+from googlesearch import search
+
+food = input("What recipe would you like?")
+
+recipe = str(food) + str(" recipe")
+
+r_count = 1
+number_of_recipes_index_counter = 0
+
+while True:
+    count = input("How many recipes would you like? Type 'r' to refresh")
+
+    if count.isdigit():
+
+        user_urls = []
+        number_of_recipes = []
+
+        for url in search(recipe, start=0, stop=20):
+            if food.lower() in url:
+                user_urls.append(url)
+                number_of_recipes.append(int(count))
+
+            if user_urls is None:
+                print("No recipes found")
+
+        joined = ", ".join(user_urls[:int(count)])
+        s = joined.replace(',', """
+        """)
+
+        d = s.replace(' ', '')
+        print(d)
+        print()
+
+    elif count == 'r':
+        r_count += 1
+
+        number_of_recipes_index = number_of_recipes[0]
+
+        if r_count == 2:
+            for url in search(recipe, start=0, stop=int(number_of_recipes_index)*r_count):
+                if food.lower() in url:
+                    user_urls.append(url)
+
+            print_recipes = user_urls[int(number_of_recipes_index):int(number_of_recipes_index)*r_count]
+
+            joined = ", ".join(print_recipes)
+            s = joined.replace(',', """
+                """)
+
+            d = s.replace(' ', '')
+            print(d)
+            print()
+
+        elif r_count > 2:
+            number_of_recipes_index_counter += 1
+
+            for url in search(recipe, start=0, stop=int(number_of_recipes_index)*r_count):
+                if food.lower() in url:
+                    user_urls.append(url)
+
+            print_recipes = user_urls[int((number_of_recipes_index_counter)*number_of_recipes_index + number_of_recipes_index):int(number_of_recipes_index) * r_count]
+
+            joined = ", ".join(print_recipes)
+            s = joined.replace(',', """
+                """)
+
+            d = s.replace(' ', '')
+            print(d)
+            print()
